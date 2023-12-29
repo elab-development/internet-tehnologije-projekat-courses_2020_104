@@ -29,4 +29,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Label::class);
     }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }
