@@ -24,4 +24,9 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id', 'id');
     }
+
+    public function labels()
+    {
+        return $this->belongsToMany(Label::class);
+    }
 }
