@@ -14,7 +14,7 @@ class CourseTeacher extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->foreignId('teacher')->constrained('users', 'id')->restrictOnDelete();
+            $table->foreignId('teacher_id')->constrained('users', 'id')->restrictOnDelete();
         });
     }
 
@@ -26,7 +26,7 @@ class CourseTeacher extends Migration
     public function down()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('teacher');
+            $table->dropConstrainedForeignId('teacher_id');
         });
     }
 }
