@@ -34,4 +34,24 @@ class Course extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function validateForEdit($user)
+    {
+        return $user->type == 'admin' || ($user->type == 'teacher' && $this->teacher_id == $user->id);
+    }
+    public function validateRead($user)
+    {
+        if ($this->validateForEdit($user)) {
+            return true;
+        }
+        if ($user->type != 'student') {
+            return false;
+        }
+        foreach ($this->users as $courseUser) {
+            if ($courseUser->id == $user->id) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
