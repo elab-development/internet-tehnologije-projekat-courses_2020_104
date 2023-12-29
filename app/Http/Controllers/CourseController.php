@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,12 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+        if ($user->type != 'admin' && $user->type != 'teacher') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $course = Course::create($request->all());
+        return response()->json(new CourseResource($course));
     }
 
     /**
@@ -34,9 +40,21 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Request $request, Course $course)
     {
-        //
+        $user = $request->user;
+        if ($user->type == 'student') {
+            foreach ($course->users as $courseUser) {
+                if ($courseUser->id == $user->id) {
+                    return response()->json(new CourseResource($course));
+                }
+            }
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        if (!$this->validateCourseAccess($request, $course)) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        return response()->json(new CourseResource($course));
     }
 
     /**
@@ -48,7 +66,11 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        if (!$this->validateCourseAccess($request, $course)) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $course->update($request->all());
+        return response()->json(new CourseResource($course));
     }
 
     /**
@@ -57,8 +79,18 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request, Course $course)
     {
-        //
+        if (!$this->validateCourseAccess($request, $course)) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $course->delete();
+        return response()->noContent();
+    }
+
+    private function validateCourseAccess(Request $request, Course $course)
+    {
+        $user = $request->user();
+        return $user->type == 'admin' || ($user->type == 'teacher' && $course->teacher_id == $user->id);
     }
 }
