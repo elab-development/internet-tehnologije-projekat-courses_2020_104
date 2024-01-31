@@ -18,7 +18,7 @@ class CourseItemResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'labels' => LabelResource::collection($this->labels),
+            'labels' => $this->labels == null ? [] : LabelResource::collection($this->labels),
             'teacher' => new UserResource($this->teacher)
         ];
     }

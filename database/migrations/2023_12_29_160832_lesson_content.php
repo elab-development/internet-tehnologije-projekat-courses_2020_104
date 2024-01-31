@@ -15,7 +15,7 @@ class LessonContent extends Migration
     {
         Schema::table('lessons', function (Blueprint $table) {
             $table->text('content')->change();
-            $table->enum('content_type', ['video', 'text', 'audio', 'image']);
+            $table->enum('content_type', ['video', 'text', 'audio', 'image', 'file']);
         });
     }
 

@@ -13,7 +13,7 @@ class FileController extends Controller
     {
         $user = $request->user();
         if (!$user->type != 'admin' && $user->type != 'teacher') {
-            return response()->json(["error" => "Missing permissions"], 403);
+            return response()->json(["message" => "Missing permissions"], 403);
         }
 
 
@@ -26,7 +26,7 @@ class FileController extends Controller
         $lesson = Lesson::find($lessonId);
         $course = $lesson->course;
         if (!$course->validateRead($request->user())) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
         return response(Storage::disk('local')->get($lesson->content));
     }
