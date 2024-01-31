@@ -33,5 +33,6 @@ export interface User {
     email: string,
     firstName: string,
     lastName: string,
-    type: 'student' | 'teacher' | 'admin'
+    type: UserType
 }
+export type UserType = 'student' | 'teacher' | 'admin'

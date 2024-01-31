@@ -99,4 +99,30 @@ function FormInput(props: InputProps) {
     </div>
 }
 
+interface SelectProps {
+    name: string,
+    required?: boolean,
+    label?: string,
+    data: { value: any, label: string }[]
+}
+
+function FormSelect(props: SelectProps) {
+    const { value, onChange } = useFormContext();
+    return (
+        <div className='form-group mt-3'>
+            {props.label && <label >{props.label}</label>}
+            <select className='form-control' value={value[props.name]} onChange={e => onChange(props.name, e.currentTarget.value)} required={props.required}>
+                <option value="">Select...</option>
+                {
+                    props.data.map(opt => {
+                        return (
+                            <option value={opt.value}>{opt.label}</option>
+                        )
+                    })
+                }
+            </select>
+        </div>
+    )
+}
+Form.Select = FormSelect;
 Form.Input = FormInput;

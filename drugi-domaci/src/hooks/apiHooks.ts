@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { CourseCollection } from "../model";
+import { CourseCollection, User, UserType } from "../model";
 import { searchCourses } from "../service/services";
+import axios from "axios";
 
 
 export function useCourses() {
@@ -32,4 +33,20 @@ export function useCourses() {
         setSearchParams,
         fetchCourses
     }
+}
+
+export function useUsers(userType: UserType) {
+    const [users, setUsers] = useState<User[]>([])
+    useEffect(() => {
+        axios.get('/api/users', {
+            params: {
+                type: userType
+            }
+        })
+            .then(res => {
+                setUsers(res.data)
+            }).catch(() => setUsers([]))
+    }, [userType])
+    return users;
+
 }

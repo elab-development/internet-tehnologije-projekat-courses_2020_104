@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCourses } from '../hooks/useCourses';
+import { useCourses, useUsers } from '../hooks/apiHooks';
 import CourseFilter from '../components/CourseFilter';
 import Loader from '../components/Loader';
 import CourseForm from '../components/CourseForm';
@@ -7,6 +7,7 @@ import { createCourse } from '../service/services';
 
 export default function AdminCoursesPage() {
     const { searchParams, courses, loading, setSearchParams, fetchCourses } = useCourses();
+    const teachers = useUsers('teacher')
     return (
         <div className='page'>
             <h2 className='mt-2 text-center'>
@@ -52,6 +53,7 @@ export default function AdminCoursesPage() {
                 </div>
                 <div className='col-5'>
                     <CourseForm
+                        teachers={teachers}
                         onSubmit={async val => {
                             await createCourse(val);
                             fetchCourses();

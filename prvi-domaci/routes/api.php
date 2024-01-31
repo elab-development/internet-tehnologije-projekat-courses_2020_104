@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::get('courses', [CourseController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
+    Route::get('users', [UserController::class, 'index']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('upload', [FileController::class, 'upload']);
     Route::get('lesson/{id}/file', [FileController::class, 'getFile']);
