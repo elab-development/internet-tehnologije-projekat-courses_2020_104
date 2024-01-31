@@ -13,7 +13,8 @@ export interface CourseItem {
 }
 
 export interface Course extends CourseItem {
-    lessons: Lesson[]
+    lessons: Lesson[],
+    students: User[]
 }
 
 export interface Label {

@@ -1,13 +1,15 @@
 import React from 'react'
-import { useCourses, useUsers } from '../hooks/apiHooks';
+import { useCourses, useLabels, useUsers } from '../hooks/apiHooks';
 import CourseFilter from '../components/CourseFilter';
 import Loader from '../components/Loader';
 import CourseForm from '../components/CourseForm';
 import { createCourse } from '../service/services';
+import { Link } from 'react-router-dom';
 
 export default function AdminCoursesPage() {
     const { searchParams, courses, loading, setSearchParams, fetchCourses } = useCourses();
-    const teachers = useUsers('teacher')
+    const teachers = useUsers('teacher');
+    const labels = useLabels();
     return (
         <div className='page'>
             <h2 className='mt-2 text-center'>
@@ -37,7 +39,11 @@ export default function AdminCoursesPage() {
                                         courses?.data.map(course => {
                                             return (
                                                 <tr key={course.id}>
-                                                    <td>{course.id}</td>
+                                                    <td>
+                                                        <Link to={'/course/' + course.id}>
+                                                            {course.id}
+                                                        </Link>
+                                                    </td>
                                                     <td>{course.name}</td>
                                                     <td>{course.description}</td>
                                                     <td>{course.labels.map(l => l.name).join(', ')}</td>
@@ -53,6 +59,7 @@ export default function AdminCoursesPage() {
                 </div>
                 <div className='col-5'>
                     <CourseForm
+                        labels={labels}
                         teachers={teachers}
                         onSubmit={async val => {
                             await createCourse(val);

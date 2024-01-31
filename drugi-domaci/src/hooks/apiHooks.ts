@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { CourseCollection, User, UserType } from "../model";
-import { searchCourses } from "../service/services";
+import { CourseCollection, Label, User, UserType } from "../model";
+import { getLabels, searchCourses } from "../service/services";
 import axios from "axios";
 
 
@@ -49,4 +49,14 @@ export function useUsers(userType: UserType) {
     }, [userType])
     return users;
 
+}
+
+export function useLabels() {
+    const [labels, setLabels] = useState<Label[]>([])
+
+    useEffect(() => {
+        getLabels().then(setLabels)
+    }, [])
+
+    return labels;
 }

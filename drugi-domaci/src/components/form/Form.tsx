@@ -111,7 +111,7 @@ function FormSelect(props: SelectProps) {
     return (
         <div className='form-group mt-3'>
             {props.label && <label >{props.label}</label>}
-            <select className='form-control' value={value[props.name]} onChange={e => onChange(props.name, e.currentTarget.value)} required={props.required}>
+            <select className='form-control' value={value[props.name]} onChange={e => onChange(props.name, e.currentTarget.value)} >
                 <option value="">Select...</option>
                 {
                     props.data.map(opt => {
@@ -124,5 +124,50 @@ function FormSelect(props: SelectProps) {
         </div>
     )
 }
+
+function MultipleSelect(props: SelectProps) {
+    const { value, onChange } = useFormContext();
+    const selected = value[props.name] || [];
+    const available = props.data.filter(e => !selected.includes(e.value));
+
+    return (
+        <div className='form-group mt-3'>
+            {props.label && <label >{props.label}</label>}
+            <select className='form-control' onChange={e => {
+                onChange(props.name, [...selected, e.currentTarget.value])
+            }} required={props.required}>
+                {
+                    available.map(opt => {
+                        return (
+                            <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        )
+                    })
+                }
+            </select>
+            <ul className='list mt-2'>
+                {
+                    selected.map((elem: any) => {
+                        return (
+                            <li key={elem}>
+                                <div className='flex pt-1'>
+                                    <div>
+                                        {props.data.find(e => e.value == elem)?.label}
+                                    </div>
+                                    <button className='btn btn-danger' onClick={() => {
+                                        onChange(props.name, selected.filter((e: any) => e != elem))
+                                    }}>Delete</button>
+                                </div>
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+        </div>
+    )
+
+
+}
+
+Form.MultipleSelect = MultipleSelect;
 Form.Select = FormSelect;
 Form.Input = FormInput;

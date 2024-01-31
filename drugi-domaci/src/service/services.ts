@@ -59,7 +59,17 @@ export async function updateCourse(courseId: number, data: any) {
         throw new Error("Unexpected error")
     }
 }
-
+export async function updateCourseStudents(courseId: number, data: any) {
+    try {
+        const res = await axios.put('/api/courses/' + courseId + '/students', data);
+        return res.data as Course;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(error.response?.data.error)
+        }
+        throw new Error("Unexpected error")
+    }
+}
 export async function deleteCourse(courseId: number) {
     try {
         await axios.delete('/api/courses/' + courseId);

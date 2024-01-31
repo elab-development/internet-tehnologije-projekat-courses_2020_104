@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 import UserCoursesPage from './pages/UserCoursesPage';
 import UserCoursePage from './pages/UserCoursePage';
 import AdminCoursesPage from './pages/AdminCoursesPage';
+import AdminCoursePage from './pages/AdminCoursePage';
 
 function App() {
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -70,6 +71,7 @@ function App() {
         <HomeLayout error={error} removeError={() => setError('')}>
           <Routes>
             <Route path='*' element={<AdminCoursesPage />} />
+            <Route path='course/:id' element={<AdminCoursePage />} />
           </Routes>
         </HomeLayout>
       </div>

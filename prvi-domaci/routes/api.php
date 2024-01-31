@@ -30,5 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('upload', [FileController::class, 'upload']);
     Route::get('lesson/{id}/file', [FileController::class, 'getFile']);
+    Route::put('courses/{id}/students', [FileController::class, 'getFile']);
     Route::apiResource('courses', CourseController::class)->only(['show', 'store', 'update', 'destroy']);
+    Route::put('courses/{id}/students', [CourseController::class, 'updateStudents']);
 });

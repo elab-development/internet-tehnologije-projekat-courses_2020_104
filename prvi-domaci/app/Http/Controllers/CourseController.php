@@ -76,11 +76,22 @@ class CourseController extends Controller
         if ($user->type != 'admin' && $user->type != 'teacher') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
+        DB::beginTransaction();
         $course = Course::create([
             "name" => $request->name,
             "description" => $request->description,
             "teacher_id" => $user->type == 'teacher' ? $user->id : $request->teacherId
         ]);
+        $labels = $request->input('labels', []);
+        if (sizeof($labels) > 0) {
+            foreach ($labels as $label) {
+                DB::table('course_label')->insert([
+                    "label_id" => $label,
+                    'course_id' => $course->id
+                ]);
+            }
+        }
+        DB::commit();
         return response()->json(new CourseResource($course));
     }
 
@@ -99,6 +110,26 @@ class CourseController extends Controller
         return response()->json(new CourseResource($course));
     }
 
+
+    public function updateStudents(Request $request, $courseId)
+    {
+        $course = Course::find($courseId);
+        if (!$course->validateForEdit($request->user())) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+        DB::beginTransaction();
+        DB::statement("DELETE from course_user where course_id=" . $course->id);
+        foreach ($request->studentIds as $studentId) {
+            DB::table('course_user')->insert([
+                "user_id" => $studentId,
+                'course_id' => $course->id
+            ]);
+        }
+        DB::commit();
+        $course = Course::find($courseId);
+        return response()->json(new CourseResource($course));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -111,7 +142,18 @@ class CourseController extends Controller
         if (!$course->validateForEdit($request->user())) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
-        $course->update($request->all());
+        DB::beginTransaction();
+        $course->update($request->only(['name', 'description', '']));
+        $labels = $request->input('labels', []);
+        if (sizeof($labels) > 0) {
+            foreach ($labels as $label) {
+                DB::table('course_label')->insert([
+                    "label_id" => $label,
+                    'course_id' => $course->id
+                ]);
+            }
+        }
+        DB::commit();
         return response()->json(new CourseResource($course));
     }
 

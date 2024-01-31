@@ -20,7 +20,8 @@ class CourseResource extends JsonResource
             'description' => $this->description,
             'labels' => $this->labels == null ? [] : LabelResource::collection($this->labels),
             'teacher' => new UserResource($this->teacher),
-            'lessons' => LessonResource::collection($this->lessons)
+            'lessons' => LessonResource::collection($this->lessons),
+            'students' => UserResource::collection($this->users)
         ];
     }
 }
