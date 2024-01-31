@@ -62,11 +62,17 @@ function App() {
   }
   if (user.type === 'admin') {
     return (
-      <HomeLayout error={error} removeError={() => setError('')}>
-        <Routes>
-          <Route path='*' element={<AdminCoursesPage />} />
-        </Routes>
-      </HomeLayout>
+      <div>
+        <Navbar user={user} logout={() => {
+          logout()
+            .then(() => setUser(undefined))
+        }} />
+        <HomeLayout error={error} removeError={() => setError('')}>
+          <Routes>
+            <Route path='*' element={<AdminCoursesPage />} />
+          </Routes>
+        </HomeLayout>
+      </div>
     )
   }
   return (

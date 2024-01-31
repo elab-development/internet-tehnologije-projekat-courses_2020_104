@@ -18,8 +18,8 @@ export default function AdminCoursesPage() {
                 onChange={setSearchParams}
                 maxPage={courses ? Math.ceil(courses.total / 20) : 1}
             />
-            <div className='row mt-2'>
-                <div className='col-7'>
+            <div className='row mt-2' style={{ overflow: 'auto' }}>
+                <div className='col-7' style={{ overflow: 'auto', height: '100%' }}>
                     {
                         loading ? (<Loader />) : (
                             <table className='table'>

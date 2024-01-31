@@ -116,7 +116,7 @@ function FormSelect(props: SelectProps) {
                 {
                     props.data.map(opt => {
                         return (
-                            <option value={opt.value}>{opt.label}</option>
+                            <option key={opt.value} value={opt.value}>{opt.label}</option>
                         )
                     })
                 }
