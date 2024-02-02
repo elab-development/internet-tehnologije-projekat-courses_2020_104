@@ -146,3 +146,21 @@ export async function getUser() {
         throw new Error("Unexpected error")
     }
 }
+
+export async function uploadFile(fd: FormData) {
+    const res = await axios.post('/api/upload', fd);
+    return res.data.fileName as string;
+}
+
+export async function createLesson(courseId: number, lessonData: any) {
+    const res = await axios.post('/api/courses/' + courseId + '/lessons', lessonData);
+    return res.data as Course;
+}
+export async function updateLesson(courseId: number, lessonId: number, lessonData: any) {
+    const res = await axios.put('/api/courses/' + courseId + '/lessons/' + lessonId, lessonData);
+    return res.data as Course;
+}
+export async function deleteLesson(courseId: number, lessonId: number) {
+    const res = await axios.delete('/api/courses/' + courseId + '/lessons/' + lessonId);
+    return res.data as Course;
+}

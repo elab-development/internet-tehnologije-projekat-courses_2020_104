@@ -63,33 +63,34 @@ function App() {
   }
   if (user.type === 'admin') {
     return (
-      <div>
-        <Navbar user={user} logout={() => {
-          logout()
-            .then(() => setUser(undefined))
-        }} />
-        <HomeLayout error={error} removeError={() => setError('')}>
-          <Routes>
-            <Route path='*' element={<AdminCoursesPage />} />
-            <Route path='course/:id' element={<AdminCoursePage />} />
-          </Routes>
-        </HomeLayout>
-      </div>
+      <HomeLayout
+        navbar={(
+          <Navbar user={user} logout={() => {
+            logout()
+              .then(() => setUser(undefined))
+          }} />
+        )}
+        error={error} removeError={() => setError('')}>
+
+        <Routes>
+          <Route path='*' element={<AdminCoursesPage />} />
+          <Route path='course/:id' element={<AdminCoursePage />} />
+        </Routes>
+      </HomeLayout>
     )
   }
   return (
-    <div>
+    <HomeLayout navbar={(
       <Navbar user={user} logout={() => {
         logout()
           .then(() => setUser(undefined))
       }} />
-      <HomeLayout error={error} removeError={() => setError('')}>
-        <Routes>
-          <Route path='*' element={<UserCoursesPage />} />
-          <Route path='course/:id' element={<UserCoursePage />} />
-        </Routes>
-      </HomeLayout>
-    </div>
+    )} error={error} removeError={() => setError('')}>
+      <Routes>
+        <Route path='*' element={<UserCoursesPage />} />
+        <Route path='course/:id' element={<UserCoursePage />} />
+      </Routes>
+    </HomeLayout>
   );
 }
 

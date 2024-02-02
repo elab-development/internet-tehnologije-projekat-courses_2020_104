@@ -4,12 +4,16 @@ import React from 'react'
 interface Props {
     error: string,
     children: React.ReactNode,
-    removeError: () => void
+    removeError: () => void,
+    navbar?: React.ReactNode
 }
 
 export default function HomeLayout(props: Props) {
     return (
         <div className='home-layout'>
+            {
+                props.navbar
+            }
             <div className='container home-content'>
                 {
                     props.error && (

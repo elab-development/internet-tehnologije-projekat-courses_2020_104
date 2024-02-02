@@ -26,8 +26,10 @@ export interface Lesson {
     id: number,
     title: string,
     content: string,
-    contentType: 'video' | 'text' | 'audio' | 'image' | 'file'
+    contentType: LessonType
 }
+
+export type LessonType = 'video' | 'text' | 'audio' | 'image' | 'file'
 
 export interface User {
     id: number,
