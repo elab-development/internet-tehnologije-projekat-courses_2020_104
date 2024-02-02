@@ -164,3 +164,12 @@ export async function deleteLesson(courseId: number, lessonId: number) {
     const res = await axios.delete('/api/courses/' + courseId + '/lessons/' + lessonId);
     return res.data as Course;
 }
+
+export async function getLabelStatistics() {
+    const res = await axios.get('/api/label-statistics');
+    return res.data as any;
+}
+export async function getCourseStatistics() {
+    const res = await axios.get('/api/course-statistics');
+    return res.data as any;
+}

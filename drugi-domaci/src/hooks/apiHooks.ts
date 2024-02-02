@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CourseCollection, Label, User, UserType } from "../model";
-import { getLabels, searchCourses } from "../service/services";
+import { getCourseStatistics, getLabelStatistics, getLabels, searchCourses } from "../service/services";
 import axios from "axios";
 
 
@@ -59,4 +59,22 @@ export function useLabels() {
     }, [])
 
     return labels;
+}
+export function useLabelStatistics() {
+    const [labels, setLabels] = useState<any[]>([])
+
+    useEffect(() => {
+        getLabelStatistics().then(setLabels)
+    }, [])
+
+    return labels;
+}
+export function useCourseStatistics() {
+    const [data, setData] = useState<any[]>([])
+
+    useEffect(() => {
+        getCourseStatistics().then(setData)
+    }, [])
+
+    return data;
 }

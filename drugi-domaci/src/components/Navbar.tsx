@@ -21,6 +21,9 @@ export default function Navbar(props: Props) {
                     <li className="nav-item active">
                         <NavLink className='nav-link' to='/'>Courses</NavLink>
                     </li>
+                    <li>
+                        <NavLink className='nav-link' to='/statistics'>Statustics</NavLink>
+                    </li>
                 </ul>
                 <div>
                     <span className="navbar-text mr-2">

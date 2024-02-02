@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('courses', CourseController::class)->only(['show', 'store', 'update', 'destroy']);
     Route::apiResource('courses.lessons', LessonController::class)->only(['store', 'update', 'destroy']);
     Route::put('courses/{id}/students', [CourseController::class, 'updateStudents']);
+    Route::get('course-statistics', [StatisticsController::class, 'coursesStatistics']);
+    Route::get('label-statistics', [StatisticsController::class, 'labelsStatistics']);
 });

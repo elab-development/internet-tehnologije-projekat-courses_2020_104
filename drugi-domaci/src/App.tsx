@@ -12,6 +12,7 @@ import UserCoursesPage from './pages/UserCoursesPage';
 import UserCoursePage from './pages/UserCoursePage';
 import AdminCoursesPage from './pages/AdminCoursesPage';
 import AdminCoursePage from './pages/AdminCoursePage';
+import AdminStatisticsPage from './pages/AdminStatisticsPage';
 
 function App() {
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -75,6 +76,7 @@ function App() {
         <Routes>
           <Route path='*' element={<AdminCoursesPage />} />
           <Route path='course/:id' element={<AdminCoursePage />} />
+          <Route path='statistics' element={<AdminStatisticsPage />} />
         </Routes>
       </HomeLayout>
     )
