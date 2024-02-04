@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
-import { Course, Lesson } from '../model';
-import { createLesson, deleteLesson, getCourseById, updateCourse, updateCourseStudents, updateLesson } from '../service/services';
-import Loader from '../components/Loader';
-import { useLabels, useUsers } from '../hooks/apiHooks';
-import CourseForm from '../components/CourseForm';
-import Form from '../components/form/Form';
-import LessonForm from '../components/LessonForm';
+import { Course, Lesson } from '../../model';
+import { createLesson, deleteLesson, getCourseById, updateCourse, updateCourseStudents, updateLesson } from '../../service/services';
+import Loader from '../../components/Loader';
+import { useLabels, useUsers } from '../../hooks/apiHooks';
+import CourseForm from '../../components/CourseForm';
+import Form from '../../components/form/Form';
+import LessonForm from '../../components/LessonForm';
 
-export default function AdminCoursePage() {
+interface Props {
+    admin?: boolean
+}
+
+export default function AdminCoursePage(props: Props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('')
     const courseId = useParams().id;
@@ -55,6 +59,7 @@ export default function AdminCoursePage() {
                 <div className='row '>
                     <div className='col-6'>
                         <CourseForm
+                            admin={props.admin}
                             labels={labels}
                             teachers={teachers}
                             course={course}

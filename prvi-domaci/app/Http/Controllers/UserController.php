@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        if ($user->type != 'admin') {
+        if ($user->type != 'admin' && $user->type != 'teacher') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $userType = $request->query('type', null);

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useCourseStatistics, useLabelStatistics } from '../hooks/apiHooks'
-import BarDiagram from '../components/BarDiagram';
+import { useCourseStatistics, useLabelStatistics } from '../../hooks/apiHooks'
+import BarDiagram from '../../components/BarDiagram';
 
 export default function AdminStatisticsPage() {
     const courseStatistics = useCourseStatistics();

@@ -8,12 +8,12 @@ import { Route, Routes } from 'react-router';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import Navbar from './components/Navbar';
-import UserCoursesPage from './pages/UserCoursesPage';
-import UserCoursePage from './pages/UserCoursePage';
-import AdminCoursesPage from './pages/AdminCoursesPage';
-import AdminCoursePage from './pages/AdminCoursePage';
-import AdminStatisticsPage from './pages/AdminStatisticsPage';
+import UserCoursesPage from './pages/student/UserCoursesPage';
+import UserCoursePage from './pages/student/UserCoursePage';
+import AdminCoursePage from './pages/admin/AdminCoursePage';
+import AdminStatisticsPage from './pages/admin/AdminStatisticsPage';
 import FactPage from './pages/FactPage';
+import CourseEditPage from './components/CourseEditPage';
 
 function App() {
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -75,14 +75,34 @@ function App() {
         error={error} removeError={() => setError('')}>
 
         <Routes>
-          <Route path='*' element={<AdminCoursesPage />} />
-          <Route path='course/:id' element={<AdminCoursePage />} />
+          <Route path='*' element={<CourseEditPage />} />
+          <Route path='course/:id' element={<AdminCoursePage admin />} />
           <Route path='fact' element={<FactPage />} />
           <Route path='statistics' element={<AdminStatisticsPage />} />
         </Routes>
       </HomeLayout>
     )
   }
+
+  if (user.type === 'teacher') {
+
+    return (
+      <HomeLayout navbar={(
+        <Navbar user={user} logout={() => {
+          logout()
+            .then(() => setUser(undefined))
+        }} />
+      )} error={error} removeError={() => setError('')}>
+        <Routes>
+          <Route path='*' element={<CourseEditPage teacherId={user.id} />} />
+          <Route path='course/:id' element={<AdminCoursePage />} />
+          <Route path='fact' element={<FactPage />} />
+        </Routes>
+      </HomeLayout>
+    );
+
+  }
+
   return (
     <HomeLayout navbar={(
       <Navbar user={user} logout={() => {

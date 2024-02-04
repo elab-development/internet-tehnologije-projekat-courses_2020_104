@@ -104,6 +104,7 @@ interface SelectProps {
     name: string,
     required?: boolean,
     label?: string,
+    disabled?: boolean;
     data: { value: any, label: string }[]
 }
 
@@ -134,7 +135,7 @@ function MultipleSelect(props: SelectProps) {
     return (
         <div className='form-group mt-3'>
             {props.label && <label >{props.label}</label>}
-            <select className='form-control' onChange={e => {
+            <select disabled={props.disabled} className='form-control' onChange={e => {
                 onChange(props.name, [...selected, e.currentTarget.value])
             }} required={props.required}>
                 {

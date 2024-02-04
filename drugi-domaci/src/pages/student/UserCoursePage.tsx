@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
-import { Course, Lesson } from '../model';
-import Loader from '../components/Loader';
-import { getCourseById } from '../service/services';
-import LessonView from '../components/LessonView';
+import { Course, Lesson } from '../../model';
+import Loader from '../../components/Loader';
+import { getCourseById } from '../../service/services';
+import LessonView from '../../components/LessonView';
 
 export default function UserCoursePage() {
     const [loading, setLoading] = useState(true);

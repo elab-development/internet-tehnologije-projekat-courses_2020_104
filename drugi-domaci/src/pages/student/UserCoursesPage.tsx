@@ -1,8 +1,8 @@
 import React, { useNavigate } from 'react-router';
-import CourseCard from '../components/CourseCard';
-import CourseFilter from '../components/CourseFilter';
-import Loader from '../components/Loader';
-import { useCourses } from '../hooks/apiHooks';
+import CourseCard from '../../components/CourseCard';
+import CourseFilter from '../../components/CourseFilter';
+import Loader from '../../components/Loader';
+import { useCourses } from '../../hooks/apiHooks';
 
 export default function UserCoursesPage() {
     const { searchParams, courses, loading, setSearchParams } = useCourses();

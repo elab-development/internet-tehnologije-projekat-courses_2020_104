@@ -4,16 +4,20 @@ import { getCourseStatistics, getLabelStatistics, getLabels, searchCourses } fro
 import axios from "axios";
 
 
-export function useCourses() {
+
+
+export function useCourses(teacherId?: number) {
     const [searchParams, setSearchParams] = useState<any>({ page: 1 })
     const [loading, setLoading] = useState(true);
     const [courses, setCourses] = useState<CourseCollection | undefined>(undefined)
+
+
 
     const fetchCourses = async () => {
         setLoading(true);
         try {
 
-            const res = await searchCourses(searchParams)
+            const res = await searchCourses(teacherId ? { ...searchParams, teacherId } : searchParams)
             setCourses(res);
         } catch (error) {
 
@@ -24,7 +28,7 @@ export function useCourses() {
 
     useEffect(() => {
         fetchCourses();
-    }, [searchParams])
+    }, [searchParams, teacherId])
 
     return {
         loading,

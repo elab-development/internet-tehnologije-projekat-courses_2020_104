@@ -6,6 +6,7 @@ interface Props {
     onSubmit: (data: any) => void,
     teachers: User[],
     course?: Course;
+    admin?: boolean;
     labels: Label[]
 }
 
@@ -31,7 +32,7 @@ export default function CourseForm(props: Props) {
             teacherId: props.course.teacher.id + '',
             labels: props.course.labels.map(l => l.id)
         })
-    }, [props.course])
+    }, [props.course, props.admin])
 
     return (
         <div>
@@ -44,14 +45,18 @@ export default function CourseForm(props: Props) {
             >
                 <Form.Input label='Name' placeholder='Name...' name='name' required />
                 <Form.Input label='Description' placeholder='Description...' name='description' textArea required />
-                <Form.Select label='Teacher id' name='teacherId' required
-                    data={props.teachers.map(teacher => {
-                        return {
-                            value: teacher.id,
-                            label: teacher.firstName + ' ' + teacher.lastName
-                        }
-                    })}
-                />
+                {
+                    props.admin && (
+                        <Form.Select label='Teacher id' name='teacherId' required
+                            data={props.teachers.map(teacher => {
+                                return {
+                                    value: teacher.id,
+                                    label: teacher.firstName + ' ' + teacher.lastName
+                                }
+                            })}
+                        />
+                    )
+                }
                 <Form.MultipleSelect label='Labels' name='labels' required
                     data={props.labels.map(label => {
                         return {
