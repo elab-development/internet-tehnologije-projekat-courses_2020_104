@@ -107,3 +107,13 @@ export function useLessonFile<T>(lesson: Lesson) {
     return fileUrl;
 
 }
+
+export function useFact() {
+    const [text, setText] = useState('')
+    useEffect(() => {
+        axios.get('/api/fact')
+            .then(res => setText(res.data.fact))
+            .catch(() => setText(''))
+    }, [])
+    return text;
+}

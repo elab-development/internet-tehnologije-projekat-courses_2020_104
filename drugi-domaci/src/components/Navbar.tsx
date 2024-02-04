@@ -21,9 +21,14 @@ export default function Navbar(props: Props) {
                     <li className="nav-item active">
                         <NavLink className='nav-link' to='/'>Courses</NavLink>
                     </li>
-                    <li>
-                        <NavLink className='nav-link' to='/statistics'>Statustics</NavLink>
-                    </li>
+                    {
+                        props.user.type === 'admin' && (
+                            <li>
+                                <NavLink className='nav-link' to='/statistics'>Statistics</NavLink>
+                            </li>
+                        )
+                    }
+                    <NavLink className='nav-link' to='/fact'>Radnom fact</NavLink>
                 </ul>
                 <div>
                     <span className="navbar-text mr-2">

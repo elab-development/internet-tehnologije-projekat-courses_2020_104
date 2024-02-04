@@ -13,6 +13,7 @@ import UserCoursePage from './pages/UserCoursePage';
 import AdminCoursesPage from './pages/AdminCoursesPage';
 import AdminCoursePage from './pages/AdminCoursePage';
 import AdminStatisticsPage from './pages/AdminStatisticsPage';
+import FactPage from './pages/FactPage';
 
 function App() {
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -76,6 +77,7 @@ function App() {
         <Routes>
           <Route path='*' element={<AdminCoursesPage />} />
           <Route path='course/:id' element={<AdminCoursePage />} />
+          <Route path='fact' element={<FactPage />} />
           <Route path='statistics' element={<AdminStatisticsPage />} />
         </Routes>
       </HomeLayout>
@@ -91,6 +93,7 @@ function App() {
       <Routes>
         <Route path='*' element={<UserCoursesPage />} />
         <Route path='course/:id' element={<UserCoursePage />} />
+        <Route path='fact' element={<FactPage />} />
       </Routes>
     </HomeLayout>
   );
