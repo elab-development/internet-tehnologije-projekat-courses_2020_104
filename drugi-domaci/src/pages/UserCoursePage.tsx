@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
-import { Course } from '../model';
+import { Course, Lesson } from '../model';
 import Loader from '../components/Loader';
 import { getCourseById } from '../service/services';
+import LessonView from '../components/LessonView';
 
 export default function UserCoursePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('')
     const courseId = useParams().id;
     const [course, setCourse] = useState<Course | undefined>(undefined);
-
+    const [selectedLesson, setSelectedLesson] = useState<Lesson | undefined>(undefined)
 
     useEffect(() => {
         setLoading(true)
@@ -73,7 +74,9 @@ export default function UserCoursePage() {
                         {
                             course.lessons.map(lesson => {
                                 return (
-                                    <li key={lesson.id} className='list-group-item'>
+                                    <li onClick={() => {
+                                        setSelectedLesson(prev => prev === lesson ? undefined : lesson)
+                                    }} key={lesson.id} className={`list-group-item pe-auto ${lesson === selectedLesson ? 'active' : ''}`}>
                                         {`${lesson.title} - ${lesson.contentType}`}
                                     </li>
                                 )
@@ -82,6 +85,13 @@ export default function UserCoursePage() {
                     </ul>
                 </div>
             </div>
+            {
+                selectedLesson && (
+                    <div className='py-5'>
+                        <LessonView lesson={selectedLesson} />
+                    </div>
+                )
+            }
         </div>
     )
 }

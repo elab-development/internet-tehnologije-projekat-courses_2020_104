@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { CourseCollection, Label, User, UserType } from "../model";
+import React, { useState, useEffect, ElementRef } from "react";
+import { CourseCollection, Label, Lesson, User, UserType } from "../model";
 import { getCourseStatistics, getLabelStatistics, getLabels, searchCourses } from "../service/services";
 import axios from "axios";
 
@@ -77,4 +77,33 @@ export function useCourseStatistics() {
     }, [])
 
     return data;
+}
+
+export function useLessonFile<T>(lesson: Lesson) {
+    const url = `/api/lessons/${lesson.id}/file`;
+    const [fileUrl, setFileUrl] = useState('');
+    const splited = lesson.content.split('.');
+    const extension = splited[splited.length - 1];
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return;
+        }
+        fetch(url, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(res => res.blob())
+            .then(bl => {
+                const blob = extension === 'pdf' ? new Blob([bl], { type: 'application/pdf' }) : bl;
+                setFileUrl(URL.createObjectURL(blob))
+            })
+            .catch(e => {
+                setFileUrl('');
+            })
+    }, [url])
+
+    return fileUrl;
+
 }

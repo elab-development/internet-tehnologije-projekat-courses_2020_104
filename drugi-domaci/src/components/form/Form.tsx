@@ -79,6 +79,7 @@ interface InputProps {
     required?: boolean,
     type?: React.HTMLInputTypeAttribute,
     label?: string,
+    disabled?: boolean,
     textArea?: boolean,
     placeholder: string
 }
@@ -89,10 +90,10 @@ function FormInput(props: InputProps) {
         {props.label && <label >{props.label}</label>}
         {
             props.textArea ? (
-                <textarea className='form-control' required={props.required}
+                <textarea disabled={props.disabled} className='form-control' required={props.required}
                     value={value[props.name]} placeholder={props.placeholder} onChange={e => onChange(props.name, e.currentTarget.value)}></textarea>
             ) : (
-                <input className='form-control' required={props.required} type={props.type}
+                <input disabled={props.disabled} className='form-control' required={props.required} type={props.type}
                     value={value[props.name]} placeholder={props.placeholder} onChange={e => onChange(props.name, e.currentTarget.value)} />
             )
         }

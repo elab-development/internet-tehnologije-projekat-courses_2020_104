@@ -30,7 +30,7 @@ class LessonController extends Controller
             "course_id" => $course->id,
             'title' => $request->title,
             'content' => $request->content,
-            'contentType' => $request->contentType,
+            'content_type' => $request->contentType,
         ]);
         return response()->json(new CourseResource($course));
     }
@@ -53,7 +53,11 @@ class LessonController extends Controller
         if ($user->type === 'teacher' && $course->teacher_id != $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
-        $lesson->update($request->all());
+        $lesson->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'content_type' => $request->contentType,
+        ]);
         return response()->json(new CourseResource($course));
     }
 

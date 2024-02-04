@@ -12,12 +12,12 @@ interface Props {
 const emptyForm = {
     title: '',
     content: '',
-    contentType: undefined as LessonType | undefined
+    contentType: 'text' as LessonType
 }
 const lessonTypes = ['video', 'text', 'audio', 'image', 'file'];
 export default function LessonForm(props: Props) {
     const [formState, setFormState] = useState(emptyForm);
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (!props.lesson) {
             setFormState(emptyForm);
@@ -32,7 +32,12 @@ export default function LessonForm(props: Props) {
 
     return (
         <Form title={props.lesson ? 'Update lesson' : 'Create lesson'}
-            onSubmit={props.onSubmit} formValue={formState} onChange={(val: any) => setFormState(val)}
+            onSubmit={val => {
+                if (loading) {
+                    return;
+                }
+                props.onSubmit(val);
+            }} formValue={formState} onChange={(val: any) => setFormState(val)}
         >
             <Form.Input name='title' placeholder='Title...' required label='Title' />
             <Form.Select name='contentType' label='Content type' data={lessonTypes.map(val => {
@@ -51,7 +56,9 @@ export default function LessonForm(props: Props) {
                         const file = files[0];
                         const fd = new FormData();
                         fd.set('file', file);
+                        setLoading(true);
                         const fileName = await uploadFile(fd);
+                        setLoading(false);
                         setFormState(prev => {
                             return {
                                 ...prev,
@@ -61,8 +68,8 @@ export default function LessonForm(props: Props) {
                     }} />
                 )
             }
-            <Form.Input textArea name='content' placeholder='Content...' required label='Content' />
-            <button className='btn btn-primary form-control mt-1'>Save lesson</button>
+            <Form.Input disabled={formState.contentType != 'text'} textArea name='content' placeholder='Content...' required label='Content' />
+            <button disabled={loading} className='btn btn-primary form-control mt-1'>Save lesson</button>
         </Form>
     )
 }
