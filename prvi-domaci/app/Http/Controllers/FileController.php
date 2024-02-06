@@ -12,7 +12,6 @@ class FileController extends Controller
     public function uploadFile(Request $request)
     {
         $user = $request->user();
-        error_log($user->type);
         if ($user->type != 'admin' && $user->type != 'teacher') {
             return response()->json(["message" => "Missing permissions"], 403);
         }

@@ -89,6 +89,9 @@ export function useLessonFile(lesson: Lesson) {
     const splited = lesson.content.split('.');
     const extension = splited[splited.length - 1];
     useEffect(() => {
+        if (lesson.contentType === 'text') {
+            return;
+        }
         const token = localStorage.getItem('token');
         if (!token) {
             return;
@@ -108,7 +111,7 @@ export function useLessonFile(lesson: Lesson) {
             })
     }, [url])
 
-    return fileUrl;
+    return { fileUrl, extension };
 
 }
 

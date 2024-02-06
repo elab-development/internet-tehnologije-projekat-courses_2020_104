@@ -7,9 +7,13 @@ interface Props {
 }
 
 export default function LessonView(props: Props) {
+    const { fileUrl, extension } = useLessonFile(props.lesson);
     if (props.lesson.contentType !== 'text') {
         return (
-            <MediaLesson lesson={props.lesson} />
+            <div>
+                <MediaLesson fileUrl={fileUrl} lesson={props.lesson} />
+                <a className='mt-2' href={fileUrl} download={props.lesson.title + '.' + extension}>Download</a>
+            </div>
         )
     }
     return (
@@ -21,31 +25,30 @@ export default function LessonView(props: Props) {
     )
 }
 
-function MediaLesson(props: Props) {
+function MediaLesson(props: Props & { fileUrl: string }) {
 
-    const fileUrl = useLessonFile(props.lesson);
 
     if (props.lesson.contentType === 'image') {
         return (
-            <img src={fileUrl} alt="Image" width='100%' style={{ height: '90vh' }} />
+            <img src={props.fileUrl} alt="Image" width='100%' style={{ height: '90vh' }} />
         )
     }
     if (props.lesson.contentType === 'video') {
         return (
-            <video itemType="video/mp4" src={fileUrl} width='100%' style={{ height: '90vh' }} controls></video>
+            <video itemType="video/mp4" src={props.fileUrl} width='100%' style={{ height: '90vh' }} controls></video>
         )
     }
     if (props.lesson.contentType === 'audio') {
         return (
             <figure>
                 <figcaption>Listen:</figcaption>
-                <audio controls src={fileUrl}></audio>
+                <audio controls src={props.fileUrl}></audio>
             </figure>
         )
     }
     if (props.lesson.contentType === 'file') {
         return (
-            <embed src={fileUrl} width="100%" height="600px" />
+            <embed src={props.fileUrl} width="100%" height="600px" />
         )
     }
 
