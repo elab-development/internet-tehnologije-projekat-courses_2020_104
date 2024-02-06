@@ -39,3 +39,27 @@ export interface User {
     type: UserType
 }
 export type UserType = 'student' | 'teacher' | 'admin'
+
+export interface BooksResponse {
+    total: number,
+    hasNext: boolean,
+    hasPrevious: boolean,
+    data: Book[]
+}
+
+export interface Book {
+    id: number,
+    title: string,
+    authors: BookPerson[],
+    translators: BookPerson[],
+    subjects: string[],
+    languages: string[],
+    bookshelves: string[],
+    copyright: boolean;
+}
+
+export interface BookPerson {
+    name: string,
+    birth_year: number,
+    death_year: number
+}
