@@ -64,7 +64,7 @@ export default function AdminCoursePage(props: Props) {
                             teachers={teachers}
                             course={course}
                             onSubmit={async val => {
-                                const res = await updateCourseStudents(course.id, val);
+                                const res = await updateCourse(course.id, val);
                                 setCourse(res);
                             }}
                         />
