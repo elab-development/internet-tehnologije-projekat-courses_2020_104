@@ -16,7 +16,6 @@ class StatisticsController extends Controller
         }
         $res = DB::table('courses', 'c')
             ->leftJoin('course_user', 'course_user.course_id', '=', 'c.id')
-            ->leftJoin('lessons', 'lessons.course_id', '=', 'c.id')
             ->join('course_label', 'course_label.course_id', '=', 'c.id')
             ->join('labels', 'labels.id', '=', 'course_label.label_id')
             ->select('labels.id', 'labels.name', DB::raw('COUNT(course_user.user_id) as users'))
@@ -33,7 +32,6 @@ class StatisticsController extends Controller
         }
         $res = DB::table('courses', 'c')
             ->leftJoin('course_user', 'course_user.course_id', '=', 'c.id')
-            ->leftJoin('lessons', 'lessons.course_id', '=', 'c.id')
             ->select('c.id', 'c.name', DB::raw('COUNT(course_user.user_id) as users'))
             ->groupBy('c.id', 'c.name')
             ->orderBy('users', 'desc')
