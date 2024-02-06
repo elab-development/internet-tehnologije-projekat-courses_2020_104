@@ -174,8 +174,8 @@ export async function getCourseStatistics() {
     return res.data as any;
 }
 
-export async function getFact() {
-    const res = await axios.get('/api/fact');
+export async function getFact(signal?: GenericAbortSignal) {
+    const res = await axios.get('/api/fact', { signal });
     return res.data.fact as string;
 }
 

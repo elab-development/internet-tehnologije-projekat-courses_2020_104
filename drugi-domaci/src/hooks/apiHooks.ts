@@ -112,9 +112,13 @@ export function useLessonFile(lesson: Lesson) {
 export function useFact() {
     const [text, setText] = useState('')
     useEffect(() => {
-        getFact()
+        const abortController = new AbortController();
+        getFact(abortController.signal)
             .then(res => setText(res))
             .catch(() => setText(''))
+        return () => {
+            abortController.abort();
+        }
     }, [])
     return text;
 }
