@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Lesson, LessonType } from '../model'
 import Form from './form/Form';
-import axios from 'axios';
 import { uploadFile } from '../service/services';
 
 interface Props {

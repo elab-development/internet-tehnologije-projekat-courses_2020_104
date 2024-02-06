@@ -1,7 +1,6 @@
-import React, { useState, useEffect, ElementRef } from "react";
+import { useEffect, useState } from "react";
 import { CourseCollection, Label, Lesson, User, UserType } from "../model";
 import { fetchUsers, getCourseStatistics, getFact, getLabelStatistics, getLabels, searchCourses } from "../service/services";
-import axios from "axios";
 
 
 
