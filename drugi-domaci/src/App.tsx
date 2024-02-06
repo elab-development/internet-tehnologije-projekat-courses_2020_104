@@ -14,6 +14,7 @@ import AdminCoursePage from './pages/admin/AdminCoursePage';
 import AdminStatisticsPage from './pages/admin/AdminStatisticsPage';
 import FactPage from './pages/FactPage';
 import CourseEditPage from './components/CourseEditPage';
+import BooksPage from './pages/student/BooksPage';
 
 function App() {
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -114,6 +115,7 @@ function App() {
         <Route path='*' element={<UserCoursesPage />} />
         <Route path='course/:id' element={<UserCoursePage />} />
         <Route path='fact' element={<FactPage />} />
+        <Route path='books' element={<BooksPage />} />
       </Routes>
     </HomeLayout>
   );

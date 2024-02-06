@@ -29,6 +29,11 @@ export default function Navbar(props: Props) {
                         )
                     }
                     <NavLink className='nav-link' to='/fact'>Radnom fact</NavLink>
+                    {
+                        props.user.type==='student' &&(
+                            <NavLink className='nav-link' to='/books'>Book search</NavLink>
+                        )
+                    }
                 </ul>
                 <div>
                     <span className="navbar-text mr-2">
