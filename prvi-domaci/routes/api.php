@@ -2,14 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\FactController;
+use App\Http\Controllers\PublicApiController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +26,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('labels', [LabelController::class, 'index']);
 Route::get('courses', [CourseController::class, 'index']);
 
-Route::get('fact', [FactController::class, 'index']);
+Route::get('fact', [PublicApiController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
