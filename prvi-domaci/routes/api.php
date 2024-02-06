@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\FactController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\LessonController;
@@ -27,11 +28,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('labels', [LabelController::class, 'index']);
 Route::get('courses', [CourseController::class, 'index']);
 
-Route::get('fact', function () {
-    $response = Http::get('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en');
-    $text = $response->json('text', null);
-    return response(['fact' => $text]);
-});
+Route::get('fact', [FactController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
