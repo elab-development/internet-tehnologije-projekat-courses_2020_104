@@ -12,7 +12,9 @@ export default function LessonView(props: Props) {
         return (
             <div>
                 <MediaLesson fileUrl={fileUrl} lesson={props.lesson} />
-                <a className='mt-2' href={fileUrl} download={props.lesson.title + '.' + extension}>Download</a>
+                <a className='mt-2' href={fileUrl} download={props.lesson.title + '.' + extension}>
+                    <button className='btn btn-primary'>Download</button>
+                </a>
             </div>
         )
     }
