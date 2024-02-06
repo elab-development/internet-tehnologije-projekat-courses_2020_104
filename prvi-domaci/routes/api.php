@@ -26,7 +26,8 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('labels', [LabelController::class, 'index']);
 Route::get('courses', [CourseController::class, 'index']);
 
-Route::get('fact', [PublicApiController::class, 'index']);
+Route::get('fact', [PublicApiController::class, 'facts']);
+Route::get('books', [PublicApiController::class, 'books']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
