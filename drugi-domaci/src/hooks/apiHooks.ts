@@ -124,9 +124,13 @@ export function useBooks() {
     const [books, setBooks] = useState<BooksResponse | undefined>(undefined);
 
     useEffect(() => {
-        getBooks(search)
+        const abortController = new AbortController();
+        getBooks(search, abortController.signal)
             .then(setBooks)
             .catch(() => setBooks(undefined))
+        return () => {
+            abortController.abort();
+        }
     }, [search])
 
     return books;

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { GenericAbortSignal } from "axios";
 import { BooksResponse, Course, CourseCollection, Label, User, UserType } from "../model";
 
 
@@ -184,7 +184,9 @@ export async function fetchUsers(userType?: UserType) {
     return res.data as User[];
 }
 
-export async function getBooks(search: string) {
-    const res = await axios.get("/api/books" + search);
+export async function getBooks(search: string, signal?: GenericAbortSignal) {
+    const res = await axios.get("/api/books" + search, {
+        signal
+    });
     return res.data as BooksResponse;
 }
