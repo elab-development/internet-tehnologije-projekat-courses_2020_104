@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ElementRef } from "react";
 import { CourseCollection, Label, Lesson, User, UserType } from "../model";
-import { getCourseStatistics, getLabelStatistics, getLabels, searchCourses } from "../service/services";
+import { getCourseStatistics, getFact, getLabelStatistics, getLabels, searchCourses } from "../service/services";
 import axios from "axios";
 
 
@@ -83,7 +83,7 @@ export function useCourseStatistics() {
     return data;
 }
 
-export function useLessonFile<T>(lesson: Lesson) {
+export function useLessonFile(lesson: Lesson) {
     const url = `/api/lessons/${lesson.id}/file`;
     const [fileUrl, setFileUrl] = useState('');
     const splited = lesson.content.split('.');
@@ -115,8 +115,8 @@ export function useLessonFile<T>(lesson: Lesson) {
 export function useFact() {
     const [text, setText] = useState('')
     useEffect(() => {
-        axios.get('/api/fact')
-            .then(res => setText(res.data.fact))
+        getFact()
+            .then(res => setText(res))
             .catch(() => setText(''))
     }, [])
     return text;

@@ -173,3 +173,8 @@ export async function getCourseStatistics() {
     const res = await axios.get('/api/course-statistics');
     return res.data as any;
 }
+
+export async function getFact() {
+    const res = await axios.get('/api/fact');
+    return res.data.fact as string;
+}
