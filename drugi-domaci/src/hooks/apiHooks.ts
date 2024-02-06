@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ElementRef } from "react";
 import { CourseCollection, Label, Lesson, User, UserType } from "../model";
-import { getCourseStatistics, getFact, getLabelStatistics, getLabels, searchCourses } from "../service/services";
+import { fetchUsers, getCourseStatistics, getFact, getLabelStatistics, getLabels, searchCourses } from "../service/services";
 import axios from "axios";
 
 
@@ -42,14 +42,8 @@ export function useCourses(teacherId?: number) {
 export function useUsers(userType: UserType) {
     const [users, setUsers] = useState<User[]>([])
     useEffect(() => {
-        axios.get('/api/users', {
-            params: {
-                type: userType
-            }
-        })
-            .then(res => {
-                setUsers(res.data)
-            }).catch(() => setUsers([]))
+        fetchUsers(userType)
+            .then(setUsers).catch(() => setUsers([]))
     }, [userType])
     return users;
 

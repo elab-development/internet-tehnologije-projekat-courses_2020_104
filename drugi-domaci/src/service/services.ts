@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Course, CourseCollection, Label, User } from "../model";
+import { Course, CourseCollection, Label, User, UserType } from "../model";
 
 
 export async function getLabels() {
@@ -177,4 +177,9 @@ export async function getCourseStatistics() {
 export async function getFact() {
     const res = await axios.get('/api/fact');
     return res.data.fact as string;
+}
+
+export async function fetchUsers(userType?: UserType) {
+    const res = await axios.get('/api/users', { params: { type: userType } });
+    return res.data as User[];
 }
