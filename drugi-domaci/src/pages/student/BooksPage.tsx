@@ -42,6 +42,37 @@ export default function BooksPage() {
                     className="btn btn-white border-dark"
                 > &raquo;</button>
             </div>
+            <table className='table mt-2'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Authors</th>
+                        <th>Translators</th>
+                        <th>Subjects</th>
+                        <th>Languages</th>
+                        <th>Bookshelves</th>
+                        <th>Copyright</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        books?.data.map(book => {
+                            return (
+                                <tr key={book.id}>
+                                    <td>{book.id}</td>
+                                    <td>{book.title}</td>
+                                    <td>{book.authors.map(person => person.name).join(', ')}</td>
+                                    <td>{book.translators.map(person => person.name).join(', ')}</td>
+                                    <td>{book.languages.join(', ')}</td>
+                                    <td>{book.bookshelves.join(', ')}</td>
+                                    <td>{book.copyright ? 'Yes' : 'No'}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
         </div>
     )
 }
