@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Course, CourseCollection, Label, User, UserType } from "../model";
+import { BooksResponse, Course, CourseCollection, Label, User, UserType } from "../model";
 
 
 export async function getLabels() {
@@ -182,4 +182,9 @@ export async function getFact() {
 export async function fetchUsers(userType?: UserType) {
     const res = await axios.get('/api/users', { params: { type: userType } });
     return res.data as User[];
+}
+
+export async function getBooks(search: string) {
+    const res = await axios.get("/api/books" + search);
+    return res.data as BooksResponse;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { CourseCollection, Label, Lesson, User, UserType } from "../model";
-import { fetchUsers, getCourseStatistics, getFact, getLabelStatistics, getLabels, searchCourses } from "../service/services";
+import { BooksResponse, CourseCollection, Label, Lesson, User, UserType } from "../model";
+import { fetchUsers, getBooks, getCourseStatistics, getFact, getLabelStatistics, getLabels, searchCourses } from "../service/services";
+import { useLocation } from "react-router";
 
 
 
@@ -116,4 +117,17 @@ export function useFact() {
             .catch(() => setText(''))
     }, [])
     return text;
+}
+
+export function useBooks() {
+    const search = useLocation().search;
+    const [books, setBooks] = useState<BooksResponse | undefined>(undefined);
+
+    useEffect(() => {
+        getBooks(search)
+            .then(setBooks)
+            .catch(() => setBooks(undefined))
+    }, [search])
+
+    return books;
 }
