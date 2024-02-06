@@ -32,7 +32,7 @@ export default function CourseForm(props: Props) {
             teacherId: props.course.teacher.id + '',
             labels: props.course.labels.map(l => l.id)
         })
-    }, [props.course, props.admin])
+    }, [props.course])
 
     return (
         <div>
