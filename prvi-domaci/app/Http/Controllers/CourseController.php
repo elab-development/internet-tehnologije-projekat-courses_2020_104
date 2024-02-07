@@ -139,20 +139,24 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        if (!$course->validateForEdit($request->user())) {
+        $user = $request->user();
+        if (!$course->validateForEdit($user)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         DB::beginTransaction();
-        $course->update($request->only(['name', 'description', '']));
+        $course->update([
+            "name" => $request->name,
+            "description" => $request->description,
+            "teacher_id" => $user->type == 'teacher' ? $user->id : $request->teacherId
+        ]);
         $labels = $request->input('labels', []);
-        if (sizeof($labels) > 0) {
+        DB::statement("DELETE from course_label where course_id=" . $course->id);
             foreach ($labels as $label) {
                 DB::table('course_label')->insert([
                     "label_id" => $label,
                     'course_id' => $course->id
                 ]);
             }
-        }
         DB::commit();
         return response()->json(new CourseResource($course));
     }
